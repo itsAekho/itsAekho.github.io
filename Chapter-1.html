@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HENOSIS — Chapter 1</title>
+  <style>
+    body {
+      margin: 0;
+      background: #09090b;
+      color: #f4f4f5;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      background: rgba(9,9,11,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 1rem;
+      z-index: 20;
+    }
+
+    .topbar-inner {
+      width: min(900px, calc(100% - 2rem));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .reader {
+      width: min(900px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 4rem;
+    }
+
+    .reader h1 {
+      margin-bottom: 0.4rem;
+    }
+
+    .muted {
+      color: #a1a1aa;
+    }
+
+    .page {
+      margin-top: 1rem;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #111114;
+    }
+
+    .page img {
+      width: 100%;
+      display: block;
+    }
+
+    .chapter-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.9rem 1.1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,0.08);
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="index.html">Home</a>
+      <a href="chapters.html">All Chapters</a>
+    </div>
+  </header>
+
+  <main class="reader">
+    <h1>Chapter 1: The First Awakening</h1>
+    <p class="muted">24 pages</p>
+
+    <div class="page"><img src="images/ch1-page1.jpg" alt="Chapter 1 page 1"></div>
+    <div class="page"><img src="images/ch1-page2.jpg" alt="Chapter 1 page 2"></div>
+    <div class="page"><img src="images/ch1-page3.jpg" alt="Chapter 1 page 3"></div>
+
+    <div class="chapter-nav">
+      <a class="btn" href="chapters.html">← Back to Archive</a>
+      <a class="btn" href="chapter-2.html">Next Chapter →</a>
+    </div>
+  </main>
+</body>
+</html>
