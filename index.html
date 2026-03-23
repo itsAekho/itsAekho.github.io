@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HENOSIS</title>
+  <meta name="description" content="HENOSIS - an independent manga experience." />
+  <style>
+    :root {
+      --bg: #09090b;
+      --bg-soft: #111114;
+      --card: rgba(255,255,255,0.04);
+      --card-2: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.18);
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --muted-2: #71717a;
+      --accent: #ffffff;
+      --shadow: 0 24px 60px rgba(0,0,0,0.40);
+      --radius: 28px;
+      --radius-sm: 18px;
+      --max: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .section { padding: 4.5rem 0; }
+    .eyebrow {
+      color: var(--muted-2);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.78rem;
+      margin: 0 0 0.75rem;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .muted { color: var(--muted); }
+    .muted-2 { color: var(--muted-2); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.12), transparent 32%),
+        linear-gradient(to bottom, rgba(255,255,255,0.04), transparent 42%),
+        var(--bg);
+    }
+
+    .hero-grid,
+    .about-grid,
+    .footer-grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      min-height: 90vh;
+      padding: 4rem 0;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .lead {
+      max-width: 38rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.25rem;
+      border-radius: 20px;
+      font-weight: 700;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--accent);
+      color: #09090b;
+      box-shadow: 0 12px 30px rgba(255,255,255,0.08);
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.05);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+      max-width: 34rem;
+      margin-top: 2rem;
+    }
+
+    .stat,
+    .card,
+    .panel,
+    .tile,
+    .note {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .stat {
+      padding: 1rem;
+      box-shadow: none;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.8rem;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-art {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .hero-glow-1,
+    .hero-glow-2 {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(60px);
+      pointer-events: none;
+    }
+
+    .hero-glow-1 {
+      width: 140px;
+      height: 140px;
+      background: rgba(255,255,255,0.10);
+      left: -15px;
+      top: 30px;
+    }
+
+    .hero-glow-2 {
+      width: 180px;
+      height: 180px;
+      background: rgba(255,255,255,0.05);
+      right: 0;
+      top: 0;
+    }
+
+    .art-card {
+      position: relative;
+      padding: 1rem;
+      backdrop-filter: blur(10px);
+      background: rgba(17,17,20,0.82);
+    }
+
+    .art-card.offset { margin-top: 4rem; }
+
+    .placeholder {
+      aspect-ratio: 3 / 4;
+      border-radius: 20px;
+      border: 1px dashed rgba(255,255,255,0.16);
+      background: linear-gradient(to bottom, #1b1b21, #111114);
+      overflow: hidden;
+    }
+
+    .placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .small {
+      font-size: 0.93rem;
+      color: var(--muted);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .tip {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      border-radius: 18px;
+      padding: 0.8rem 1rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: var(--text);
+    }
+
+    .chapters,
+    .characters,
+    .gallery {
+      display: grid;
+      gap: 1.4rem;
+    }
+
+    .chapters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .characters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      padding: 1.2rem;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+      box-shadow: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: var(--card-2);
+      border-color: var(--border-strong);
+    }
+
+    .wide-placeholder {
+      aspect-ratio: 16 / 10;
+      border-radius: 20px;
+      border: 1px dashed rgba(255,255,255,0.16);
+      background: #111114;
+      margin-bottom: 1.15rem;
+      overflow: hidden;
+    }
+
+    .tag-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      font-size: 0.92rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .about-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .about-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: start;
+    }
+
+    .tile,
+    .note {
+      padding: 1.2rem;
+      box-shadow: none;
+    }
+
+    .note + .note { margin-top: 0.9rem; }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+      padding: 2.5rem 0;
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.7rem 1rem;
+      color: var(--muted);
+    }
+
+    .footer-links a:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(9,9,11,0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .topbar-inner {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 0.95rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-weight: 900;
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+    }
+
+    .nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav a:hover { color: var(--text); }
+
+    @media (max-width: 1000px) {
+      .hero-grid,
+      .about-grid,
+      .footer-grid,
+      .chapters,
+      .characters,
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid { min-height: auto; }
+      .art-card.offset { margin-top: 0; }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+
+    @media (max-width: 640px) {
+      .stats { grid-template-columns: 1fr; }
+      .hero-art { grid-template-columns: 1fr; }
+      .topbar-inner { flex-direction: column; align-items: start; }
+      .nav { gap: 0.8rem; }
+      .section { padding: 3.5rem 0; }
+      .container { width: min(var(--max), calc(100% - 1.2rem)); }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="#home" class="brand">HENOSIS</a>
+      <nav class="nav">
+        <a href="#chapters">Chapters</a>
+        <a href="#about">World</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="pill">Independent manga • hosted on GitHub Pages</div>
+          <h1>HENOSIS</h1>
+          <p class="lead">A cinematic manga experience with your own world, your own rules, and a clean place for readers to dive into chapters, character lore, and artwork.</p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="#chapters">Read Chapters</a>
+            <a class="btn btn-secondary" href="#about">Explore the World</a>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <strong>3</strong>
+              <span class="muted">Live Chapters</span>
+            </div>
+            <div class="stat">
+              <strong>6</strong>
+              <span class="muted">Art Previews</span>
+            </div>
+            <div class="stat">
+              <strong>100%</strong>
+              <span class="muted">Your Control</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <div class="hero-glow-1"></div>
+          <div class="hero-glow-2"></div>
+
+          <article class="panel art-card">
+            <div class="placeholder">
+              <img src="images/cover.jpg" alt="HENOSIS cover art" onerror="this.style.display='none'" />
+            </div>
+            <h3>Featured Cover Art</h3>
+            <p class="small">Replace <span class="mono">images/cover.jpg</span> with your manga cover image.</p>
+          </article>
+
+          <article class="panel art-card offset">
+            <div class="placeholder">
+              <img src="images/latest-preview.jpg" alt="Latest chapter preview art" onerror="this.style.display='none'" />
+            </div>
+            <h3>Latest Chapter Preview</h3>
+            <p class="small">Use this for a scene preview, poster, or character visual.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="chapters">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Read</p>
+            <h2>Latest Chapters</h2>
+          </div>
+          <div class="tip">Tip: link each card to a chapter page like <span class="mono">chapter-1.html</span></div>
+        </div>
+
+        <div class="chapters">
+          <a class="card" href="chapter-1.html">
+            <div class="wide-placeholder"><img src="images/chapter-1-thumb.jpg" alt="Chapter 1 thumbnail" onerror="this.style.display='none'" /></div>
+            <div class="tag-row">
+              <span class="tag">01</span>
+              <span class="muted-2">24 pages</span>
+            </div>
+            <h3>Chapter 1: The First Awakening</h3>
+            <p class="muted">A quiet beginning breaks open when a hidden power stirs beneath the surface of everyday life.</p>
+            <div class="tag-row">
+              <span class="muted-2">March 2026</span>
+              <strong>Open chapter →</strong>
+            </div>
+          </a>
+
+          <a class="card" href="chapter-2.html">
+            <div class="wide-placeholder"><img src="images/chapter-2-thumb.jpg" alt="Chapter 2 thumbnail" onerror="this.style.display='none'" /></div>
+            <div class="tag-row">
+              <span class="tag">02</span>
+              <span class="muted-2">31 pages</span>
+            </div>
+            <h3>Chapter 2: Echoes at the Harbor</h3>
+            <p class="muted">Strange signs gather near the docks, pulling old memories and new dangers into the same tide.</p>
+            <div class="tag-row">
+              <span class="muted-2">April 2026</span>
+              <strong>Open chapter →</strong>
+            </div>
+          </a>
+
+          <a class="card" href="chapter-3.html">
+            <div class="wide-placeholder"><img src="images/chapter-3-thumb.jpg" alt="Chapter 3 thumbnail" onerror="this.style.display='none'" /></div>
+            <div class="tag-row">
+              <span class="tag">03</span>
+              <span class="muted-2">29 pages</span>
+            </div>
+            <h3>Chapter 3: Kingdom of Artesia</h3>
+            <p class="muted">The world widens as legends, monuments, and buried loyalties begin to reveal their shape.</p>
+            <div class="tag-row">
+              <span class="muted-2">May 2026</span>
+              <strong>Open chapter →</strong>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about-wrap" id="about">
+      <div class="container about-grid">
+        <div>
+          <p class="eyebrow">World</p>
+          <h2>Built for your story</h2>
+          <p class="lead">This layout is designed for creators who want a polished home base outside platforms with heavy posting restrictions. Add your lore, chapter archive, character pages, news updates, and reader links in one place.</p>
+
+          <div class="characters">
+            <article class="tile">
+              <p class="eyebrow">Lead</p>
+              <h3>Douglas</h3>
+              <p class="muted">A determined young man carrying more than he says, pulled toward a destiny he never asked for.</p>
+            </article>
+            <article class="tile">
+              <p class="eyebrow">Powerhouse</p>
+              <h3>Buffalont</h3>
+              <p class="muted">A fierce presence with brute force, style, and a mythic aura that turns every entrance into an event.</p>
+            </article>
+            <article class="tile">
+              <p class="eyebrow">Faction</p>
+              <h3>The Griffen Watch</h3>
+              <p class="muted">Ancient guardians tied to the architecture, history, and secrets of Artesia.</p>
+            </article>
+          </div>
+        </div>
+
+        <aside class="panel" style="padding:1.4rem;">
+          <h3>Site sections to add next</h3>
+          <div class="note">
+            <strong>Chapter Archive</strong>
+            <p class="muted">A full list of every chapter with release dates and cover thumbnails.</p>
+          </div>
+          <div class="note">
+            <strong>Character Profiles</strong>
+            <p class="muted">Dedicated pages for Douglas, Buffalont, factions, and lore entries.</p>
+          </div>
+          <div class="note">
+            <strong>News / Updates</strong>
+            <p class="muted">Post release notes, hiatus notices, and behind-the-scenes art updates.</p>
+          </div>
+          <div class="note">
+            <strong>Contact / Links</strong>
+            <p class="muted">Connect readers to your socials, newsletter, or support page.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Gallery</p>
+            <h2>Artwork Preview Grid</h2>
+          </div>
+        </div>
+
+        <div class="gallery">
+          <article class="card"><div class="placeholder"><img src="images/art-1.jpg" alt="Artwork preview 1" onerror="this.style.display='none'" /></div><p class="small" style="padding-top:0.8rem;">Art Preview 1</p></article>
+          <article class="card"><div class="placeholder"><img src="images/art-2.jpg" alt="Artwork preview 2" onerror="this.style.display='none'" /></div><p class="small" style="padding-top:0.8rem;">Art Preview 2</p></article>
+          <article class="card"><div class="placeholder"><img src="images/art-3.jpg" alt="Artwork preview 3" onerror="this.style.display='none'" /></div><p class="small" style="padding-top:0.8rem;">Art Preview 3</p></article>
+          <article class="card"><div class="placeholder"><img src="images/art-4.jpg" alt="Artwork preview 4" onerror="this.style.display='none'" /></div><p class="small" style="padding-top:0.8rem;">Art Preview 4</p></article>
+          <article class="card"><div class="placeholder"><img src="images/art-5.jpg" alt="Artwork preview 5" onerror="this.style.display='none'" /></div><p class="small" style="padding-top:0.8rem;">Art Preview 5</p></article>
+          <article class="card"><div class="placeholder"><img src="images/art-6.jpg" alt="Artwork preview 6" onerror="this.style.display='none'" /></div><p class="small" style="padding-top:0.8rem;">Art Preview 6</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">HENOSIS</div>
+        <p class="small">Hosted independently. Built for long-form storytelling, reader immersion, and full creative control.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#chapters">Chapters</a>
+        <a href="#about">World</a>
+        <a href="#gallery">Gallery</a>
+        <a href="mailto:you@example.com">Email</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
