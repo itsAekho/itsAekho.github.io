@@ -180,7 +180,49 @@
       padding: 2rem 0;
       color: var(--muted);
     }
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
 
+.pagination a,
+.pagination span {
+  padding: 0.55rem 0.8rem;
+  border-radius: 10px;
+  color: var(--muted);
+  border: 1px solid transparent;
+  transition: 0.18s ease;
+}
+
+.pagination a {
+  text-decoration: none;
+}
+
+.pagination a:hover {
+  border-color: var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+}
+
+.pagination .active {
+  background: #0ea5e9;
+  color: white;
+  font-weight: 800;
+}
+
+.pagination .btn-page {
+  border: 1px solid #0ea5e9;
+  color: #0ea5e9;
+}
+
+.pagination .btn-page:hover {
+  background: #0ea5e9;
+  color: white;
+}
     @media (max-width: 760px) {
       .chapter-row {
         grid-template-columns: 1fr;
@@ -269,6 +311,24 @@
         </a>
 
       </div>
+
+<div class="pagination">
+  <span class="btn-page">‹ Previous</span>
+
+  <span class="active">1</span>
+
+  <a href="chapters-2.html">2</a>
+  <a href="chapters-3.html">3</a>
+  <a href="chapters-4.html">4</a>
+  <a href="chapters-5.html">5</a>
+
+  <span>...</span>
+
+  <a href="chapters-22.html">22</a>
+
+  <a class="btn-page" href="chapters-2.html">Next ›</a>
+</div>
+
     </div>
   </main>
 
